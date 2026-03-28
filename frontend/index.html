@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FreshCart Grocery Shop</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+
+<script>
+  const API = 'http://localhost:5000/api/products';
+
+  async function loadFeaturedProducts() {
+    try {
+      const res = await fetch(API);
+      const products = await res.json();
+
+      const grid = document.getElementById('featured-products');
+
+      // Latest 4 products மட்டும் காட்டு
+      const featured = products.slice(0, 4);
+
+      if (featured.length === 0) {
+        grid.innerHTML = '<p style="text-align:center;">No products yet!</p>';
+        return;
+      }
+
+      grid.innerHTML = featured.map(product => `
+        <div class="product-card">
+          <img src="${product.image || 'https://via.placeholder.com/200'}" 
+               alt="${product.name}" 
+               class="product-image">
+          <div class="product-info">
+            <span class="product-category">${product.category}</span>
+            <h3 class="product-name">${product.name}</h3>
+            <p class="product-quantity">${product.quantity}</p>
+            <div class="product-footer">
+              <span class="product-price">₹${product.price}</span>
+              <a href="products.html" class="btn btn-primary btn-sm">View</a>
+            </div>
+          </div>
+        </div>
+      `).join('');
+
+    } catch (err) {
+      document.getElementById('featured-products').innerHTML = 
+        '<p style="text-align:center; color:red;">Unable to load products. Make sure server is running!</p>';
+    }
+  }
+
+  loadFeaturedProducts();
+</script>
+
+<body>
+
+  <nav class="navbar">
+    <a href="index.html" class="nav-brand">
+      <i class="fa-solid fa-leaf"></i> HMart
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="products.html">All Products</a></li>
+      <li><a href="contact.html">Contact Us</a></li>
+    </ul>
+    <div class="nav-actions">
+      <a href="tel:+919876543210" class="btn btn-primary"><i class="fa-solid fa-phone"></i> Call Now</a>
+      <a href="admin.html" class="btn btn-outline"><i class="fa-solid fa-user"></i> Admin</a>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-content">
+      <h1 class="hero-title">Fresh Groceries Delivered to Your Doorstep</h1>
+      <p class="hero-subtitle">Premium quality groceries, fresh organic produce, healthy snacks, and essential home supplies everything you need, packed with care.</p>
+      <a href="products.html" class="btn btn-primary">Explore Products <i class="fa-solid fa-arrow-right"></i></a>
+    </div>
+    <div class="hero-image">
+      <img src="https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&q=80&w=800" alt="Fresh Groceries">
+    </div>
+  </section>
+
+  <div class="container">
+    <h2 class="section-title">Featured Categories</h2>
+    <div class="filter-bar" style="justify-content: center;">
+      <div class="category-tabs">
+        <div class="tab" onclick="window.location.href='products.html?category=Groceries'">Groceries</div>
+        <div class="tab" onclick="window.location.href='products.html?category=Snacks'">Snacks</div>
+        <div class="tab" onclick="window.location.href='products.html?category=Notebooks'">Notebooks</div>
+        <div class="tab" onclick="window.location.href='products.html?category=Cow %26 Cattle Feeds'">Cow & Cattle Feeds</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Featured Products Section -->
+<div class="container">
+  <h2 class="section-title">Featured Products</h2>
+  <div class="products-grid" id="featured-products">
+    <p style="text-align:center;">Loading...</p>
+  </div>
+  <div style="text-align:center; margin-top:20px;">
+    <a href="products.html" class="btn btn-primary">View All Products <i class="fa-solid fa-arrow-right"></i></a>
+  </div>
+</div>
+
+  <footer>
+    <p>&copy; 2026 HMart Grocery Shop. All rights reserved.</p>
+  </footer>
+
+</body>
+</html>
