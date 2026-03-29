@@ -1,4 +1,4 @@
-const API_URL = 'http://localhost:5000/api/products';
+const API_URL = 'https://grocery-shop-cs8f.onrender.com/api/products';
 
 // On products page load
 document.addEventListener('DOMContentLoaded', () => {

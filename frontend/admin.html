@@ -95,7 +95,7 @@
   </div>
 
   <script>
-    const API = 'http://localhost:5000/api/products';
+    const API = 'https://grocery-shop-cs8f.onrender.com/api/products';
     let currentToken = localStorage.getItem('grocery_token');
 
     if(currentToken) {
@@ -105,7 +105,7 @@
     async function login() {
       const u = document.getElementById('username').value;
       const p = document.getElementById('password').value;
-      const res = await fetch('http://localhost:5000/api/auth/login', {
+      const res = await fetch('https://grocery-shop-cs8f.onrender.com/api/auth/login', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({username: u, password: p})
